@@ -1,0 +1,49 @@
+<Window x:Class="ThreeD.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:helix="http://helix-toolkit.org/wpf"
+        Title="ThreeD" Height="720" Width="1080"
+        Icon="icon.png"
+        AllowDrop="True" Drop="OnDrop" DragOver="OnDragOver">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="OnOpenExecuted"/>
+    </Window.CommandBindings>
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+            <Button Content="Open…" Command="ApplicationCommands.Open" Padding="8,2"/>
+            <Separator/>
+            <Button Content="Reset view" Click="OnResetView" Padding="8,2"/>
+            <CheckBox x:Name="GridToggle" Content="Grid" IsChecked="True"
+                      Checked="OnGridToggled" Unchecked="OnGridToggled"
+                      VerticalAlignment="Center" Margin="8,0,0,0"/>
+        </ToolBar>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusText" Text="Open a model (Ctrl+O) or drop a file here."/>
+            </StatusBarItem>
+        </StatusBar>
+        <helix:HelixViewport3D x:Name="Viewport"
+                               ModelUpDirection="0,0,1"
+                               ShowViewCube="True"
+                               ShowCoordinateSystem="True"
+                               RotateAroundMouseDownPoint="True"
+                               ZoomAroundMouseDownPoint="True"
+                               IsHeadLightEnabled="False"
+                               RotateGesture="LeftClick"
+                               PanGesture="RightClick">
+            <helix:HelixViewport3D.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#FAFBFD" Offset="0"/>
+                    <GradientStop Color="#CDD3DA" Offset="1"/>
+                </LinearGradientBrush>
+            </helix:HelixViewport3D.Background>
+            <helix:DefaultLights/>
+            <helix:GridLinesVisual3D x:Name="GroundGrid"
+                                     Fill="#5A7F8A96"
+                                     Length="200" Width="200"
+                                     MinorDistance="10" MajorDistance="50"
+                                     Thickness="0.08"/>
+            <ModelVisual3D x:Name="ModelRoot"/>
+        </helix:HelixViewport3D>
+    </DockPanel>
+</Window>

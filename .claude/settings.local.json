@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command 'Add-Type -Assembly System.IO.Compression.FileSystem; $zip = [System.IO.Compression.ZipFile]::OpenRead\\('\\\\''C:\\\\Users\\\\afloc\\\\.nuget\\\\packages\\\\helixtoolkit.wpf\\\\3.1.2\\\\helixtoolkit.wpf.3.1.2.nupkg'\\\\''\\); $zip.Entries | Where-Object { $_.Name -match '\\\\''xaml|theme|camera'\\\\'' -or $_.FullName -match '\\\\''themes'\\\\'' } | Select-Object FullName | Format-List')",
+      "Bash(powershell -Command ' *)",
+      "Bash(powershell -Command \"dotnet package search HelixToolkit.Wpf --take 5 2>&1\")",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:github.comlix-toolkit)",
+      "WebFetch(domain:helixtoolkit.userecho.com)",
+      "WebFetch(domain:docs.helix-toolkit.org)",
+      "WebFetch(domain:csharp.hotexamples.com)",
+      "WebFetch(domain:csharpdoc.hotexamples.com)",
+      "Bash(gh issue *)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/helix-toolkit/helix-toolkit/refs/heads/main/Source/HelixToolkit.Wpf/Controls/HelixViewport3D.cs\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/helix-toolkit/helix-toolkit/refs/heads/main/Source/HelixToolkit.Wpf/Controls/CameraController.cs\")",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(dotnet build *)"
+    ]
+  }
+}
