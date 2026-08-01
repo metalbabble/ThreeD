@@ -15,7 +15,9 @@
       "Bash(curl -s \"https://raw.githubusercontent.com/helix-toolkit/helix-toolkit/refs/heads/main/Source/HelixToolkit.Wpf/Controls/HelixViewport3D.cs\")",
       "Bash(curl -s \"https://raw.githubusercontent.com/helix-toolkit/helix-toolkit/refs/heads/main/Source/HelixToolkit.Wpf/Controls/CameraController.cs\")",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(dotnet build *)"
+      "Bash(dotnet build *)",
+      "Bash(dotnet --version)",
+      "Bash(dotnet --list-sdks)"
     ]
   }
 }
