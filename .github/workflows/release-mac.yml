@@ -1,0 +1,56 @@
+name: Release (macOS)
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "mac/**"
+      - "icon.png"
+      - ".github/workflows/release-mac.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build universal .app bundle
+        working-directory: mac
+        run: make app-universal
+
+      - name: Verify bundle
+        working-directory: mac
+        run: |
+          lipo -archs ThreeDViewer.app/Contents/MacOS/ThreeDViewer
+          codesign --verify --verbose=2 ThreeDViewer.app
+
+      # ditto, not zip: it preserves the bundle's symlinks, permissions, and
+      # code signature so the unpacked .app still validates.
+      - name: Package bundle
+        working-directory: mac
+        run: ditto -c -k --sequesterRsrc --keepParent ThreeDViewer.app ThreeDViewer-macos.zip
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: mac-v${{ github.run_number }}
+          name: macOS Release ${{ github.run_number }}
+          body: |
+            Universal build of the macOS viewer (Apple silicon + Intel), requires macOS 14 or later.
+
+            **Install:** unzip and drag `ThreeDViewer.app` to your Applications folder.
+
+            The app is ad-hoc signed rather than signed with a paid Developer ID, so
+            Gatekeeper will block it on first launch after downloading. To allow it:
+
+            ```sh
+            xattr -dr com.apple.quarantine /Applications/ThreeDViewer.app
+            ```
+
+            Or right-click the app, choose **Open**, and confirm at the prompt.
+          files: mac/ThreeDViewer-macos.zip

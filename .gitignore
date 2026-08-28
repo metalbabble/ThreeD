@@ -60,3 +60,6 @@ mac/ThreeDViewer.app/
 
 # Icon generation scratch
 mac/AppIcon.iconset/
+
+# Packaged release artifact
+mac/ThreeDViewer-macos.zip
