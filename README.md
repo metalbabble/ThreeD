@@ -29,7 +29,14 @@ reads OBJ, PLY, OFF, 3DS, and LWO via Helix Toolkit, and offers a headless
 
 ## Releases
 
-Windows single-file builds are published automatically from `main` by
-[release-windows.yml](.github/workflows/release-windows.yml) whenever the
-Windows app changes. The macOS app is currently built locally with
-`make app` (see [mac/README.md](mac/README.md)).
+Both platforms publish automatically from `main`, each only when its own
+platform directory changes:
+
+| Workflow | Tags | Artifact |
+|----------|------|----------|
+| [release-windows.yml](.github/workflows/release-windows.yml) | `v{n}` | `ThreeD.exe` (self-contained, win-x64) |
+| [release-mac.yml](.github/workflows/release-mac.yml) | `mac-v{n}` | `ThreeDViewer-macos.zip` (universal, macOS 14+) |
+
+The macOS bundle is ad-hoc signed rather than signed with a paid Developer ID,
+so Gatekeeper blocks a downloaded copy until it is de-quarantined — see
+[mac/README.md](mac/README.md) for the one-liner.
