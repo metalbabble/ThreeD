@@ -13,17 +13,38 @@ final class ViewerModel: ObservableObject {
     @Published var scene: SCNScene?
     @Published var fileName: String?
     @Published var errorMessage: String?
+    @Published var isLoading = false
+
+    /// Identifies the most recent load so that a slow parse finishing after a
+    /// newer one was started cannot overwrite the newer result.
+    private var loadToken = 0
 
     func load(url: URL) {
         fileName = url.lastPathComponent
-        do {
-            scene = try loadScene(from: url)
-        } catch {
-            errorMessage = error.localizedDescription
+        scene = nil
+        isLoading = true
+        loadToken &+= 1
+        let token = loadToken
+
+        // Parsing a large mesh takes long enough to block a redraw, which left
+        // the window sitting on its "drop a file" state. Run it off the main
+        // actor so the loading message actually appears.
+        Task.detached(priority: .userInitiated) {
+            let result = Result { try Self.loadScene(from: url) }
+            await MainActor.run {
+                guard self.loadToken == token else { return }
+                self.isLoading = false
+                switch result {
+                case .success(let scene):
+                    self.scene = scene
+                case .failure(let error):
+                    self.errorMessage = error.localizedDescription
+                }
+            }
         }
     }
 
-    private func loadScene(from url: URL) throws -> SCNScene {
+    private nonisolated static func loadScene(from url: URL) throws -> SCNScene {
         switch url.pathExtension.lowercased() {
         case "3mf":
             return try ThreeMFParser.parse(url: url)
