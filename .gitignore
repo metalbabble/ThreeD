@@ -48,3 +48,15 @@ out/
 # OS files
 .DS_Store
 Thumbs.db
+
+## Swift / macOS app ##
+
+# SwiftPM build artifacts
+.build/
+.swiftpm/
+
+# Assembled app bundle (rebuilt by `make app`)
+mac/ThreeDViewer.app/
+
+# Icon generation scratch
+mac/AppIcon.iconset/
