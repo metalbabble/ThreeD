@@ -1,4 +1,4 @@
-APP        = ThreeDViewer
+APP        = ThreeD
 BUNDLE     = $(APP).app
 BINARY     = .build/release/$(APP)
 UNIVERSAL  = .build/universal/$(APP)

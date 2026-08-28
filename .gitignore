@@ -56,10 +56,10 @@ Thumbs.db
 .swiftpm/
 
 # Assembled app bundle (rebuilt by `make app`)
-mac/ThreeDViewer.app/
+mac/ThreeD.app/
 
 # Icon generation scratch
 mac/AppIcon.iconset/
 
 # Packaged release artifact
-mac/ThreeDViewer-macos.zip
+mac/ThreeD-macos.zip

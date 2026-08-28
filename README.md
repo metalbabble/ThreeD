@@ -35,7 +35,7 @@ platform directory changes:
 | Workflow | Tags | Artifact |
 |----------|------|----------|
 | [release-windows.yml](.github/workflows/release-windows.yml) | `v{n}` | `ThreeD.exe` (self-contained, win-x64) |
-| [release-mac.yml](.github/workflows/release-mac.yml) | `mac-v{n}` | `ThreeDViewer-macos.zip` (universal, macOS 14+) |
+| [release-mac.yml](.github/workflows/release-mac.yml) | `mac-v{n}` | `ThreeD-macos.zip` (universal, macOS 14+) |
 
 The macOS bundle is ad-hoc signed rather than signed with a paid Developer ID,
 so Gatekeeper blocks a downloaded copy until it is de-quarantined — see

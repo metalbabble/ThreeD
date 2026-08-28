@@ -26,14 +26,14 @@ jobs:
       - name: Verify bundle
         working-directory: mac
         run: |
-          lipo -archs ThreeDViewer.app/Contents/MacOS/ThreeDViewer
-          codesign --verify --verbose=2 ThreeDViewer.app
+          lipo -archs ThreeD.app/Contents/MacOS/ThreeD
+          codesign --verify --verbose=2 ThreeD.app
 
       # ditto, not zip: it preserves the bundle's symlinks, permissions, and
       # code signature so the unpacked .app still validates.
       - name: Package bundle
         working-directory: mac
-        run: ditto -c -k --sequesterRsrc --keepParent ThreeDViewer.app ThreeDViewer-macos.zip
+        run: ditto -c -k --sequesterRsrc --keepParent ThreeD.app ThreeD-macos.zip
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
@@ -43,14 +43,14 @@ jobs:
           body: |
             Universal build of the macOS viewer (Apple silicon + Intel), requires macOS 14 or later.
 
-            **Install:** unzip and drag `ThreeDViewer.app` to your Applications folder.
+            **Install:** unzip and drag `ThreeD.app` to your Applications folder.
 
             The app is ad-hoc signed rather than signed with a paid Developer ID, so
             Gatekeeper will block it on first launch after downloading. To allow it:
 
             ```sh
-            xattr -dr com.apple.quarantine /Applications/ThreeDViewer.app
+            xattr -dr com.apple.quarantine /Applications/ThreeD.app
             ```
 
             Or right-click the app, choose **Open**, and confirm at the prompt.
-          files: mac/ThreeDViewer-macos.zip
+          files: mac/ThreeD-macos.zip

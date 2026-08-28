@@ -28,10 +28,10 @@ The project uses the Swift Package Manager. A `Makefile` wraps the common comman
 # Quick debug build, runs directly in the terminal (no .app bundle)
 make debug
 
-# Release build only (produces .build/release/ThreeDViewer)
+# Release build only (produces .build/release/ThreeD)
 make build
 
-# Build and assemble a signed ThreeDViewer.app bundle
+# Build and assemble a signed ThreeD.app bundle
 make app
 
 # Build the .app bundle and launch it
@@ -45,7 +45,7 @@ make icon
 ```
 
 `make app` copies the release binary, `Resources/Info.plist`, and
-`Resources/AppIcon.icns` into `ThreeDViewer.app/Contents`, then ad-hoc
+`Resources/AppIcon.icns` into `ThreeD.app/Contents`, then ad-hoc
 code-signs the bundle with `codesign`.
 
 `make app-universal` builds both architectures and merges them with `lipo`
@@ -59,13 +59,13 @@ files can be opened from Finder by double-click or by dragging onto the app icon
 
 ## Releases
 
-Pushes to `main` that touch `mac/` publish a universal `ThreeDViewer-macos.zip`
+Pushes to `main` that touch `mac/` publish a universal `ThreeD-macos.zip`
 via [release-mac.yml](../.github/workflows/release-mac.yml). Because the bundle is
 ad-hoc signed rather than signed with a paid Developer ID, Gatekeeper blocks a
 downloaded copy until it is de-quarantined:
 
 ```sh
-xattr -dr com.apple.quarantine /Applications/ThreeDViewer.app
+xattr -dr com.apple.quarantine /Applications/ThreeD.app
 ```
 
 ## Samples
@@ -79,4 +79,4 @@ Shared test files live in [`../samples`](../samples): `cube.stl`, `cube.3mf`
 make clean
 ```
 
-Removes `ThreeDViewer.app` and the `.build` directory.
+Removes `ThreeD.app` and the `.build` directory.

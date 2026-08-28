@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleExecutable</key>
-    <string>ThreeDViewer</string>
+    <string>ThreeD</string>
     <key>CFBundleIdentifier</key>
     <string>com.local.threedviewer</string>
     <key>CFBundleName</key>
