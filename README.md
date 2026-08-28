@@ -1,44 +1,35 @@
 # ThreeD
 
-A small standalone Windows viewer for 3D-printing model files. WPF (.NET 10) + Helix Toolkit.
+A small standalone viewer for 3D-printing model files, available for
+**Windows** and **macOS**. Made as a quick way of previewing 3MF, STL, and
+glTF/GLB files without launching a full slicer.
 
-![ThreeD screenshot](ThreeD-screenshot.png)
+| Platform | Directory | Stack | Docs |
+|----------|-----------|-------|------|
+| Windows  | [`windows/`](windows/) | WPF (.NET 10) + Helix Toolkit | [windows/README.md](windows/README.md) |
+| macOS    | [`mac/`](mac/)         | SwiftUI + SceneKit            | [mac/README.md](mac/README.md) |
+
+![ThreeD screenshot](windows/ThreeD-screenshot.png)
 
 ## Supported formats
 
-- **3MF** — custom importer: core spec, build transforms, components, base-material colors,
-  and the production extension's `p:path` part references (used by Bambu Studio / Orca project files)
-- **glTF / GLB** — via SharpGLTF (base-color materials, scene graph, Y-up converted to Z-up)
-- **STL, OBJ, PLY, OFF, 3DS, LWO** — via Helix Toolkit's built-in readers
+Both apps read **3MF** (including build/component transforms and the
+production extension's `p:path` part references used by Bambu Studio / Orca
+project files), **STL**, and **glTF / GLB**. The Windows version additionally
+reads OBJ, PLY, OFF, 3DS, and LWO via Helix Toolkit, and offers a headless
+`--snapshot` mode.
 
-## Usage
+## Layout
 
-- `Open…` (Ctrl+O), drag-and-drop a file onto the window, or `ThreeD.exe <file>`
-- Left-drag: rotate · Wheel: zoom · Right-drag: pan · `Reset view` reframes the model
+- [`windows/`](windows/) — the Windows app (`dotnet build ThreeD.csproj`)
+- [`mac/`](mac/) — the macOS app (`make app`)
+- [`samples/`](samples/) — tiny shared test files used by both apps
+- `icon.png` — shared app icon source (`windows/icon.ico` and
+  `mac/Resources/AppIcon.icns` are generated from it)
 
-### Headless snapshot mode
+## Releases
 
-Renders a model to PNG without showing a window (handy for scripts/thumbnails):
-
-```
-ThreeD.exe --snapshot <model> <output.png> [width height]
-```
-
-## Build
-
-```
-dotnet build ThreeD.csproj
-```
-
-Standalone single-file exe:
-
-```
-dotnet publish ThreeD.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
-```
-
-Output lands in `bin\Release\net10.0-windows\win-x64\publish\`.
-
-## Samples
-
-`samples\` contains tiny test files: `cube.stl`, `cube.3mf` (two cubes exercising
-components, transforms, and material colors), `triangle.gltf`.
+Windows single-file builds are published automatically from `main` by
+[release-windows.yml](.github/workflows/release-windows.yml) whenever the
+Windows app changes. The macOS app is currently built locally with
+`make app` (see [mac/README.md](mac/README.md)).
