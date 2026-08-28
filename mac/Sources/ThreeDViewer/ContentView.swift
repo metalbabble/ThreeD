@@ -8,7 +8,9 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            if let scene = model.scene {
+            if model.isLoading {
+                loadingZone
+            } else if let scene = model.scene {
                 SceneKitViewWrapper(scene: scene)
                     .ignoresSafeArea()
             } else {
@@ -51,6 +53,20 @@ struct ContentView: View {
             Spacer()
         }
         .padding(10)
+    }
+
+    private var loadingZone: some View {
+        VStack(spacing: 14) {
+            ProgressView()
+                .controlSize(.large)
+            Text("Loading \(model.fileName ?? "file")…")
+                .font(.title3)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .truncationMode(.middle)
+                .padding(.horizontal, 40)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var dropZone: some View {
